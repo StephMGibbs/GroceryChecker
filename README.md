@@ -1,0 +1,25 @@
+# GroceryChecker
+Shows who owns grocery items, from small businesses to mega corporations. Made in JavaFX.
+
+-----
+Initial Project Idea:
+Create a JavaFx program that displays different items found in my local grocery store, and display whether it is:
+  - Family or Founder owned
+  - Private Equity owned
+  - Corporate owned
+  - Employee owned
+  - Uknown status of ownership
+
+Figured it is a fun way to see who owns the products I buy and research the small buisiness alternatives. Also an opportunity to practice JavaFx, and see whether I want it integrated into a webpage or as a desktop application.
+
+-----
+Initial plan:
+-Create JavaFX application
+-Have categories to go through (grocery items, group owned by category)
+-Have search bar to lookup specific products or brands
+
+-----
+Starting point of researching who owns nationally sold products:
+https://docs.google.com/spreadsheets/d/1oHfpkZRt4TjzE8CYW2BpMwIEZ8URL7ZNoN4_5ncTLOc/edit#gid=1557306065
+
+
