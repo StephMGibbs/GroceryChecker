@@ -21,7 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class FormEx extends Application {
+public class ProductDisplay extends Application {
     
 	public static int numTotalProducts = 20; //global var for total number of products to display
 	
