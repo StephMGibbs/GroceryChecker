@@ -1,11 +1,15 @@
 package application;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -18,7 +22,7 @@ import javafx.scene.text.Text;
 
 public class ProductDisplay extends Application {
     
-	public static int numTotalProducts = 3; //global var for total number of products to display
+	public static int numTotalProducts = 8; //global var for total number of products to display
 	
     /**
      * Start. Constructs app, Stage passed in
@@ -29,6 +33,10 @@ public class ProductDisplay extends Application {
     public void start(Stage primaryStage) { //Stage: Container for all objs - blank window
     	Group root = new Group();
     	
+    	GridPane search = searchBar();
+    	search.setLayoutX(245);
+    	search.setLayoutY(80);
+    	
     	if (numTotalProducts > 3) { //window displays 3 at most, if more then make scrollpane
 	    	ScrollPane scroll = new ScrollPane(); //scroll pane of multipleProducts() rows
 	    	scroll.setPrefSize(1000, 500); //size of scrollpane
@@ -36,7 +44,7 @@ public class ProductDisplay extends Application {
 	    	scroll.setLayoutY(250); //placement on stage: y-axis
 	    	scroll.setContent(multipleProducts(primaryStage));
 	    	
-	    	root.getChildren().addAll(scroll);
+	    	root.getChildren().addAll(search, scroll);
 	    	Scene scene = new Scene(root, Color.ALICEBLUE); //Default stage screen size
 	    	primaryStage.setScene(scene);
 	    	
@@ -58,7 +66,7 @@ public class ProductDisplay extends Application {
     		displayGrid.setLayoutX(265);
     		displayGrid.setLayoutY(250);
     		
-    		root.getChildren().addAll(rectBorder, rect, displayGrid);
+    		root.getChildren().addAll(search, rectBorder, rect, displayGrid);
     		Scene scene = new Scene(root, Color.ALICEBLUE);
 	    	primaryStage.setScene(scene);
     	}
@@ -142,6 +150,53 @@ public class ProductDisplay extends Application {
     	return recyclerGrid;
     }
     
+    public GridPane searchBar() {
+    	GridPane searchGrid = new GridPane();
+    	searchGrid.setAlignment(Pos.TOP_CENTER); //change default position fo grid to center (default top left)
+    	searchGrid.setHgap(5); //space between row
+    	searchGrid.setVgap(5); //space between col
+    	searchGrid.setPadding(new Insets(20, 20, 20, 20));
+    	
+    	TextField searchBar = new TextField();
+    	searchGrid.add(searchBar, 0, 0); //col, row, span col, & span row
+    	searchBar.setPrefWidth(920);
+    	
+    	//buttons to submit data & text to display user pressed button:
+    	Button btnSearch = new Button("Search"); //button with label: Sign in
+    	btnSearch.setPrefWidth(80);
+    	searchGrid.add(btnSearch, 1, 0);
+    	
+    	//TODO: change from text to update search results of products
+    	//Displays message when button pressed:
+    	final Text actionTarget = new Text();
+    	searchGrid.add(actionTarget, 0, 4);
+    	
+    	
+    	//Handle event for button display when user presses it:
+    	btnSearch.setOnAction(new EventHandler<ActionEvent>() {
+    		@Override
+    		public void handle(ActionEvent e) {
+    			actionTarget.setFill(Color.FIREBRICK); //color of message (red)
+    			actionTarget.setText("Search button pressed - update products"); //text of message
+    		}
+    	});
+    	
+    	return searchGrid;
+    }
+    
+    /**
+     * Filter area.
+     * Filters are:
+     * 	+Include
+     * 	+Exclude
+     * 	+Order
+     * 		-A to Z
+     * 		-Z to A
+     * 	+Price (???)
+     */
+    public void filterArea() {
+    	
+    }
     
     /**
      * The main method. 
