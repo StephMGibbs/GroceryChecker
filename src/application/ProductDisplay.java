@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -35,7 +36,12 @@ public class ProductDisplay extends Application {
     	
     	GridPane search = searchBar();
     	search.setLayoutX(245);
-    	search.setLayoutY(80);
+    	search.setLayoutY(45);
+    	
+    	HBox hb = nameAndLogo();
+    	hb.setLayoutX(550);
+    	hb.setLayoutY(5);
+    	hb.setAlignment(Pos.TOP_CENTER);
     	
     	if (numTotalProducts > 3) { //window displays 3 at most, if more then make scrollpane
 	    	ScrollPane scroll = new ScrollPane(); //scroll pane of multipleProducts() rows
@@ -44,8 +50,8 @@ public class ProductDisplay extends Application {
 	    	scroll.setLayoutY(250); //placement on stage: y-axis
 	    	scroll.setContent(multipleProducts(primaryStage));
 	    	
-	    	root.getChildren().addAll(search, scroll);
-	    	Scene scene = new Scene(root, Color.ALICEBLUE); //Default stage screen size
+	    	root.getChildren().addAll(hb, search, scroll);
+	    	Scene scene = new Scene(root, Color.MINTCREAM); //Default stage screen size
 	    	primaryStage.setScene(scene);
 	    	
     	} else {
@@ -66,12 +72,13 @@ public class ProductDisplay extends Application {
     		displayGrid.setLayoutX(265);
     		displayGrid.setLayoutY(250);
     		
-    		root.getChildren().addAll(search, rectBorder, rect, displayGrid);
-    		Scene scene = new Scene(root, Color.ALICEBLUE);
+    		root.getChildren().addAll(hb, search, rectBorder, rect, displayGrid);
+    		Scene scene = new Scene(root, Color.MINTCREAM);
 	    	primaryStage.setScene(scene);
     	}
     	
     	primaryStage.setTitle("Example Product layout");
+    	primaryStage.getIcons().add(new Image("/application/green bag.png"));
     	primaryStage.show();
     }
     
@@ -183,6 +190,32 @@ public class ProductDisplay extends Application {
     	
     	return searchGrid;
     }
+    
+    
+    /**
+     * Name and logo to display on the page.
+     * Contains green bag png as the logo & has name of app next to it.
+     */
+    public HBox nameAndLogo() {
+    	HBox hb = new HBox();
+    	
+    	Image img = new Image("/application/green bag.png"); //true = located in default package of classpath
+    	ImageView imageView = new ImageView();
+    	imageView.setImage(img);
+    	imageView.setFitWidth(55);
+    	imageView.setFitHeight(55);
+    	imageView.setPreserveRatio(true);
+    	
+    	Label appName = new Label("Grocery Checker");
+    	appName.setFont(Font.font("Book Antiqua", FontWeight.EXTRA_BOLD, 45));
+    	appName.setTextFill(Color.LIMEGREEN);
+    	
+    	hb.getChildren().addAll(imageView, appName);
+    	hb.setSpacing(10);
+    	
+    	return hb;
+    }
+    
     
     /**
      * Filter area.
