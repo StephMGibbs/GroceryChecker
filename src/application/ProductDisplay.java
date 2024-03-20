@@ -1,21 +1,16 @@
 package application;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -23,8 +18,7 @@ import javafx.scene.text.Text;
 
 public class ProductDisplay extends Application {
     
-	public static int numTotalProducts = 20; //global var for total number of products to display
-	
+	public static int numTotalProducts = 3; //global var for total number of products to display
 	
     /**
      * Start. Constructs app, Stage passed in
@@ -33,21 +27,41 @@ public class ProductDisplay extends Application {
      */
     @Override
     public void start(Stage primaryStage) { //Stage: Container for all objs - blank window
-//    	multipleProducts(primaryStage);
-    	
-    	//scroll pane of multipleProducts() rows
-    	ScrollPane scroll = new ScrollPane();
-    	scroll.setPrefSize(1000, 500); //size of scrollpane
-    	scroll.setLayoutX(265); //placement of scrollpane on stage: x-axis
-    	scroll.setLayoutY(300); //placement of scrollpane on stage: y-axis
-    	scroll.setContent(multipleProducts(primaryStage));
-    	
-    	//set stage with scroll
     	Group root = new Group();
-    	root.getChildren().addAll(scroll);
     	
-    	Scene scene = new Scene(root, Color.ALICEBLUE); //keeps grid in center despite window size since root, set start size of 300x275
-    	primaryStage.setScene(scene);
+    	if (numTotalProducts > 3) { //window displays 3 at most, if more then make scrollpane
+	    	ScrollPane scroll = new ScrollPane(); //scroll pane of multipleProducts() rows
+	    	scroll.setPrefSize(1000, 500); //size of scrollpane
+	    	scroll.setLayoutX(265); //placement on stage: x-axis
+	    	scroll.setLayoutY(250); //placement on stage: y-axis
+	    	scroll.setContent(multipleProducts(primaryStage));
+	    	
+	    	root.getChildren().addAll(scroll);
+	    	Scene scene = new Scene(root, Color.ALICEBLUE); //Default stage screen size
+	    	primaryStage.setScene(scene);
+	    	
+    	} else {
+    		Rectangle rectBorder = new Rectangle(); //Border
+    		rectBorder.setLayoutX(264); 
+    		rectBorder.setLayoutY(249); 
+    		rectBorder.setWidth(1002);
+    		rectBorder.setHeight(502);
+    		rectBorder.setFill(Color.SILVER);
+    		Rectangle rect = new Rectangle(); //space products are placed
+    		rect.setLayoutX(265); 
+	    	rect.setLayoutY(250); 
+        	rect.setWidth(1000);
+        	rect.setHeight(500);
+        	rect.setFill(Color.WHITESMOKE);
+        	
+    		GridPane displayGrid = multipleProducts(primaryStage); //arrange where on stage products will be placed
+    		displayGrid.setLayoutX(265);
+    		displayGrid.setLayoutY(250);
+    		
+    		root.getChildren().addAll(rectBorder, rect, displayGrid);
+    		Scene scene = new Scene(root, Color.ALICEBLUE);
+	    	primaryStage.setScene(scene);
+    	}
     	
     	primaryStage.setTitle("Example Product layout");
     	primaryStage.show();
@@ -102,11 +116,17 @@ public class ProductDisplay extends Application {
     	imageView.setPreserveRatio(true);
     	grid.add(imageView, 0, 0, 1, 4);
     	
-    	//grid.setGridLinesVisible(true); //TODO: debug - see lines
-    	
+    	//grid.setGridLinesVisible(true); //debug - see lines
     	return grid;
     }
     
+    /**
+     * GridPane to hold Multiple products in rows.
+     * Allows the products to be looked at & scrolled through vertically.
+     *
+     * @param primaryStage the primary stage
+     * @return the grid pane
+     */
     public GridPane multipleProducts(Stage primaryStage) {
     	GridPane recyclerGrid = new GridPane(); //holds rows of individualProduct() GridPanes
     	recyclerGrid.setAlignment(Pos.CENTER_LEFT); //change default position fo grid to center (default top left)
@@ -114,15 +134,11 @@ public class ProductDisplay extends Application {
     	recyclerGrid.setVgap(5); //space between col
     	recyclerGrid.setPadding(new Insets(25, 25, 25, 25));
     	
-    	
     	for (int i = 0; i < numTotalProducts; i++) {
     		recyclerGrid.add(individualProduct(), 0, i); //adds row with new individualProduct GridPane within
     	}
     	
-    	//recyclerGrid.setGridLinesVisible(true); //TODO: debug - see lines
-//    	Scene scene = new Scene(recyclerGrid, 300, 275); //keeps grid in center despite window size since root, set start size of 300x275
-//    	primaryStage.setScene(scene);
-    	
+    	//recyclerGrid.setGridLinesVisible(true); //debug - see lines
     	return recyclerGrid;
     }
     
